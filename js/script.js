@@ -102,25 +102,60 @@ window.addEventListener("load", function () {
     if (playPromise !== undefined) {
       playPromise.then((_) => {}).catch((error) => {});
     }
+    clearInterval(videoTimer);
+    videoReset()
+
   });
-  // 비디오 영상 플레이가 끝나면 다음 슬라이드로 이동
-  // 늘어나는 흰색 bar 기능
+  // 비디오 영상이 플레이가 끝나면 다음 슬라이드로 이동
+  // 늘어나는 흰색 bar 기능 추가
   let bars = this.document.querySelectorAll(".bar");
   let barScaleW = 0;
   // 타이머를 생성한다
   // 비디오 타이머 초기화 및 설정
-  let videosTimer;
-  // 비디오 타이머를 설정하고 초기화하는 함수를 정의하고 호출
+  let videoTimer;
+  // 비디오 타이머를 설정하고 초기화하는 함수 를 정의하고 호출
   function videoReset() {
-    // 처음에는 0%로 만드려고
+    // 처음에는 0%로 만들려고
     barScaleW = 0;
-    // 최초에 bar를 초기화 한다.
+    // 최초에 bar 를 초기화 한다.
     for (let i = 0; i < bars.length; i++) {
       let tag = bars[i];
       tag.style.width = `${barScaleW}%`;
     }
-    // 활성화 될 bar 클래스 선택
+
+    // 활성화 될 bar클래스 선택
     let activeBar = bars[videoIndex];
-    console.log(activeBar);
+    //  console.log(activeBar);
+    // 일단 타이머를 청소한다.
+    // setTimeOut : 1번 실행 clearTimeOut()
+    // setInterval : 시간마다 연속 실행 clearInterval()
+    clearInterval(videoTimer);
+    // 비디오 플레이시간
+    let videoTime = videosTimeArr[videoIndex];
+    // console.log(videoTime);
+    videoTimer = setInterval(() => {
+      barScaleW++;
+      // console.log(barScaleW);
+      activeBar.style.width = `${barScaleW}%`;
+      if (barScaleW >= 100) {
+        swVisual.slideNext();
+        clearInterval(videoTimer);
+        videoReset();
+      }
+    }, videoTime * 10);
   }
+  videoReset();
+
+  // .visual-control > li 클릭했을때 해당 페이지 활성화하기
+  const visualControlLi = this.document.querySelectorAll(
+    ".visual-control > li"
+  );
+  visualControlLi.forEach((item, index) => {
+    item.addEventListener("click", function () {
+      videoIndex = index;
+      swVisual.slideTo(videoIndex);
+    });
+    // console.log(index);
+    // console.log(item);
+  });
 });
