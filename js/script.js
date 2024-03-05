@@ -161,8 +161,8 @@ window.addEventListener("load", function () {
     // console.log(item);
   });
   // 비지니스 swiper
-  const swBusiness = new Swiper(".swBusiness" , {
-    loop:true, 
+  const sWBusiness = new Swiper(".swBusiness" ,{
+    loop:true,
     speed:500,
     autoplay:{
       delay:2500,
@@ -170,3 +170,5 @@ window.addEventListener("load", function () {
     }
   })
 });
+
+
