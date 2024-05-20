@@ -1,24 +1,6 @@
 window.addEventListener("load", function () {
   // AOS적용
   AOS.init();
-  // 안내창
-  let body = document.querySelector("body");
-  let modal = document.querySelector(".modal-wrap");
-  modal.addEventListener("click", function () {
-    // modal.style.display = "none";
-    // fadeOut(modal);
-    anime({
-      targets: ".modal",
-      delay: 200,
-      duration: 500,
-      opacity: 0,
-      easing: "easeInOutQuad",
-      complete:function(){
-        modal.style.display = "none";
-        body.classList.add("active")
-      }
-    });
-  });
   // 언어 펼침 기능
   const langWord = document.querySelector(".language-word");
   const language = document.querySelector(".languge");
